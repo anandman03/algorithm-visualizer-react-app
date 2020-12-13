@@ -32,6 +32,7 @@ class Visualizer extends React.Component {
             <React.Fragment>
                 <Navbar
                     start = {this.start}
+                    response = {this.response}
                     newList = {this.generateList}
                     updateValue = {this.updateValue}
                 />
@@ -113,6 +114,12 @@ class Visualizer extends React.Component {
     transition = async(newList) => {
         this.setState({list: newList});
         await pause(this.state.speed);
+    };
+    
+    response = () => {
+        let Navbar = document.querySelector(".navbar");
+        if(Navbar.className === "navbar") Navbar.className += " responsive";
+        else Navbar.className = "navbar";
     };
 }
  

@@ -60,6 +60,11 @@ class Navbar extends React.Component {
                 </span>
 
                 <button id="random" onClick = {() => this.props.start()}>Start</button>
+                <a className="icon" 
+                    href = "javascript:" 
+                    onClick = {() => this.props.response()}>
+                        <i class="fa fa-bars"></i>
+                </a>
             </div>
         );
     }
