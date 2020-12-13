@@ -16,15 +16,17 @@ class Visualizer extends React.Component {
         list: [],
         size: 10,
         speed: 1,
-        algorithm: 1
+        algorithm: 1,
+        running: false,
     };
-    
+
     componentDidMount() {
         this.generateList();
-        const eventList = ['.size-menu', '.speed-menu', '.algo-menu'];
-        for(let i = 0 ; i < 3 ; ++i) {
-            document.querySelector(eventList[i]).addEventListener('change', this.updateValue);
-        }
+    }
+
+    componentDidUpdate() {
+        this.onChange();
+        this.generateList();
     }
 
     render() { 
@@ -34,7 +36,7 @@ class Visualizer extends React.Component {
                     start = {this.start}
                     response = {this.response}
                     newList = {this.generateList}
-                    updateValue = {this.updateValue}
+                    onChange = {this.onChange.bind(this)}
                 />
                 <Frame 
                     list = {this.state.list}
@@ -44,25 +46,30 @@ class Visualizer extends React.Component {
         );
     }
 
-    generateList = () => {
-		let list = generator(this.state.size);
-        this.setState({ list: list });
-	};
-
-    updateValue = () => {
-        let prevSize = this.state.size;
-        this.setState({
-            size: Number(document.querySelector('.size-menu').value),
-            speed: Number(document.querySelector('.speed-menu').value),
-            algorithm: Number(document.querySelector('.algo-menu').value)
-        });
-        console.log(this.state);
-        if(this.state.size !== prevSize) this.generateList();
+    onChange = (value, option) => {
+        if(option === "algo" && !this.state.running) {
+            this.setState({ algorithm: Number(value) });
+        }
+        else if(option === "speed") {
+            this.setState({ speed: Number(value) });
+        }
+        else if(option === "size" && !this.state.running) {
+            this.setState({ size: Number(value) });
+            this.generateList();
+        }
         console.log(this.state);
     };
 
+    generateList = (value = 0) => {
+        if((this.state.list.length !== this.state.size && !this.state.running) || Number(value) === 1) {
+            let list = generator(this.state.size);
+            this.setState({ list: list });
+        }
+	};
+
     start = async() => {
         let algorithm = this.state.algorithm;
+        this.setState({ running: true });
 
         if(algorithm === 1) {
             await this.bubbleSort();

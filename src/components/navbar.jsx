@@ -18,13 +18,20 @@ class Navbar extends React.Component {
 		speeds: [0.50, 0.75, 1.00, 2.00, 4.00]
     };
 
+    handleClick = (e) => {
+        e.preventDefault();
+        this.props.response();
+    }
+
     render() {
         return (
             <div className="navbar" id="navbar">
-                <button id="random" onClick = {() => this.props.newList()}>Random</button>
+                <button id="random" onClick = {() => this.props.newList(1)}>Random</button>
                 
                 <span className="options">
-                    <select name="Algorithm" id="menu" className="algo-menu">
+                    <select 
+                        name="Algorithm" id="menu" className="algo-menu"
+                        onChange = {(e) => this.props.onChange(e.target.value, "algo")}>
                         {this.state.Algorithms.map(element => (
                             <option 
                                 key = {element.value}
@@ -36,11 +43,14 @@ class Navbar extends React.Component {
                 </span>
 
                 <span className="options">
-                    <select name="size" id="menu" className="size-menu">
+                    <select 
+                        name="size" id="menu" className="size-menu"
+                        onChange = {(e) => this.props.onChange(e.target.value, "size")}>
                         {this.state.lengths.map(element => (
                             <option 
                                 key = {10*element}
-                                value = {element}>
+                                value = {element}
+                                onChange = {() => this.props.onChange(this)}>
                                 {element}
                             </option>
                         ))}
@@ -48,7 +58,9 @@ class Navbar extends React.Component {
                 </span>
 
                 <span className="options">
-                    <select name="Algorithm" id="menu" className="speed-menu">
+                    <select 
+                        name="Algorithm" id="menu" className="speed-menu"
+                        onChange = {(e) => this.props.onChange(e.target.value, "speed")}>
                         {this.state.speeds.map(element => (
                             <option 
                                 key = {element}
@@ -60,10 +72,11 @@ class Navbar extends React.Component {
                 </span>
 
                 <button id="start" onClick = {() => this.props.start()}>Start</button>
-                <a className="icon" 
-                    href = "javascript:" 
-                    onClick = {() => this.props.response()}>
-                        <i class="fa fa-bars"></i>
+                <a 
+                    className="icon" 
+                    onClick = {(e) => this.handleClick(e)}
+                    href = "/">
+                    <i className="fa fa-bars"></i>
                 </a>
             </div>
         );

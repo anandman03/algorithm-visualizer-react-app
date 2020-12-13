@@ -142,11 +142,12 @@ footer {
   height: 20px !important;
 }
 #start {
-  margin: 10px;
+  margin-bottom: 10px;
 }
 button {
   color: #D6D6D6;
   font-weight: 400;
+  outline: none;
   cursor: pointer;
   background-color: #222;
   text-transform: uppercase;
