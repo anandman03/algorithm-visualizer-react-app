@@ -71,12 +71,8 @@ class Visualizer extends React.Component {
         let algorithm = this.state.algorithm;
         this.setState({ running: true });
 
-        if(algorithm === 1) {
-            await this.bubbleSort();
-        }
-        if(algorithm === 3) {
-            await this.insertionSort();
-        }
+        if(algorithm === 1) await this.bubbleSort();
+        if(algorithm === 3) await this.insertionSort();
     };
 
     bubbleSort = async() => {
