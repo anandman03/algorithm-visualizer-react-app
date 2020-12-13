@@ -21,9 +21,10 @@ class Visualizer extends React.Component {
     
     componentDidMount() {
         this.generateList();
-        document.querySelector('.size-menu').addEventListener('change', this.updateValue);
-        document.querySelector('.speed-menu').addEventListener('change', this.updateValue);
-        document.querySelector('.algo-menu').addEventListener('change', this.updateValue);
+        const eventList = ['.size-menu', '.speed-menu', '.algo-menu'];
+        for(let i = 0 ; i < 3 ; ++i) {
+            document.querySelector(eventList[i]).addEventListener('change', this.updateValue);
+        }
     }
 
     render() { 
@@ -48,16 +49,14 @@ class Visualizer extends React.Component {
 	};
 
     updateValue = () => {
-        let algo = document.querySelector('.algo-menu').value;
-        let speed = document.querySelector('.speed-menu').value;
-        let size = document.querySelector('.size-menu').value;
+        let prevSize = this.state.size;
         this.setState({
-            size: Number(size),
-            speed: Number(speed),
-            algorithm: Number(algo)
+            size: Number(document.querySelector('.size-menu').value),
+            speed: Number(document.querySelector('.speed-menu').value),
+            algorithm: Number(document.querySelector('.algo-menu').value)
         });
         console.log(this.state);
-        this.generateList();
+        if(this.state.size !== prevSize) this.generateList();
         console.log(this.state);
     };
 
@@ -76,18 +75,16 @@ class Visualizer extends React.Component {
         let array = [...this.state.list], length = this.state.size;
         for(let i = 0 ; i < length-1 ; ++i) {
             for(let j = 0 ; j < length-i-1 ; ++j) {
-                await this.modify(array, j, 1);
-                await this.modify(array, j+1, 1);
+                await this.modify(array, [j, j+1], 1);
                 if(compare(array[j].key, array[j+1].key, '>')) {
                     await swap(array, j, j+1);
                     await this.transition(array);
                 }
-                await this.modify(array, j, 0);
-                await this.modify(array, j+1, 0);
+                await this.modify(array, [j, j+1], 0);
             }
-            await this.modify(array, this.state.size-i-1, 2);
+            await this.modify(array, [this.state.size-i-1], 2);
         }
-        await this.modify(array, 0, 2);
+        await this.modify(array, [0], 2);
     };
 
     insertionSort = async() => {
@@ -95,27 +92,27 @@ class Visualizer extends React.Component {
         for(let i = 0 ; i < length-1 ; ++i) {
             let j = i;
             while(j >= 0 && compare(array[j].key, array[j+1].key, '>')) {
-                await this.modify(array, j, 1);
-                await this.modify(array, j+1, 1);
+                await this.modify(array, [j, j+1], 1);
                 await swap(array, j, j+1);
-                await this.modify(array, j, 0);
-                await this.modify(array, j+1, 0);
+                await this.modify(array, [j, j+1], 0);
                 --j;
             }
         }
         for(let i = 0 ; i < length ; ++i) {
-            await this.modify(array, i, 2);
+            await this.modify(array, [i], 2);
         }
     };
 
     modify = async (array, index, value) => {
-        array[index].value = value;
+        for(let i = 0 ; i < index.length ; ++i) {
+            array[index[i]].value = value;
+        }
         await this.transition(array);
     };
 
     transition = async(newList) => {
         this.setState({list: newList});
-        await pause();
+        await pause(this.state.speed);
     };
 }
  
