@@ -118,6 +118,7 @@ footer {
 }
 .navbar .options {
   text-align: center;
+  margin: 10px;
 }
 .navbar a {
   outline: none;
