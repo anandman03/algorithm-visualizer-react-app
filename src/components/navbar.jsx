@@ -1,5 +1,9 @@
 import React from 'react';
 
+import Algorithms from './navbar-components/algorithms';
+import Size from './navbar-components/size';
+import Speed from './navbar-components/speed';
+
 class Navbar extends React.Component {
     state = {
         Algorithms: [
@@ -28,48 +32,20 @@ class Navbar extends React.Component {
             <div className="navbar" id="navbar">
                 <button id="random" onClick = {() => this.props.newList(1)}>Random</button>
                 
-                <span className="options">
-                    <select 
-                        name="Algorithm" id="menu" className="algo-menu"
-                        onChange = {(e) => this.props.onChange(e.target.value, "algo")}>
-                        {this.state.Algorithms.map(element => (
-                            <option 
-                                key = {element.value}
-                                value = {element.value}>
-                                {element.type}
-                            </option>
-                        ))}
-                    </select>
-                </span>
+                <Algorithms 
+                    onChange = {this.props.onChange}
+                    algorithms = {this.state.Algorithms}
+                />
 
-                <span className="options">
-                    <select 
-                        name="size" id="menu" className="size-menu"
-                        onChange = {(e) => this.props.onChange(e.target.value, "size")}>
-                        {this.state.lengths.map(element => (
-                            <option 
-                                key = {10*element}
-                                value = {element}
-                                onChange = {() => this.props.onChange(this)}>
-                                {element}
-                            </option>
-                        ))}
-                    </select>
-                </span>
+                <Size 
+                    onChange = {this.props.onChange}
+                    lengths = {this.state.lengths}
+                />
 
-                <span className="options">
-                    <select 
-                        name="Algorithm" id="menu" className="speed-menu"
-                        onChange = {(e) => this.props.onChange(e.target.value, "speed")}>
-                        {this.state.speeds.map(element => (
-                            <option 
-                                key = {element}
-                                value = {element}>
-                                {element}x
-                            </option>
-                        ))}
-                    </select>
-                </span>
+                <Speed 
+                    onChange = {this.props.onChange}
+                    speeds = {this.state.speeds}
+                />
 
                 <button id="start" onClick = {() => this.props.start()}>Start</button>
                 <a 

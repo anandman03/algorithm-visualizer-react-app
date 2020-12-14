@@ -5,6 +5,9 @@ import Navbar from './navbar';
 import Frame from './frame';
 import Footer from './footer';
 
+// algorithms
+import BubbleSort from './algorithms/bubbleSort';
+
 // helpers
 import pause from './helper/pause';
 import generator from './helper/generator';
@@ -76,20 +79,23 @@ class Visualizer extends React.Component {
     };
 
     bubbleSort = async() => {
-        let array = [...this.state.list], length = this.state.size;
-        for(let i = 0 ; i < length-1 ; ++i) {
-            for(let j = 0 ; j < length-i-1 ; ++j) {
-                await this.modify(array, [j, j+1], 1);
-                if(compare(array[j].key, array[j+1].key, '>')) {
-                    await swap(array, j, j+1);
-                    await this.transition(array);
-                }
-                await this.modify(array, [j, j+1], 0);
-            }
-            await this.modify(array, [this.state.size-i-1], 2);
-        }
-        await this.modify(array, [0], 2);
+        BubbleSort(this.state.list, this.state.size);
     };
+    // bubbleSort = async() => {
+    //     let array = [...this.state.list], length = this.state.size;
+    //     for(let i = 0 ; i < length-1 ; ++i) {
+    //         for(let j = 0 ; j < length-i-1 ; ++j) {
+    //             await this.modify(array, [j, j+1], 1);
+    //             if(compare(array[j].key, array[j+1].key, '>')) {
+    //                 await swap(array, j, j+1);
+    //                 await this.transition(array);
+    //             }
+    //             await this.modify(array, [j, j+1], 0);
+    //         }
+    //         await this.modify(array, [this.state.size-i-1], 2);
+    //     }
+    //     await this.modify(array, [0], 2);
+    // };
 
     insertionSort = async() => {
         let array = [...this.state.list], length = this.state.size;
