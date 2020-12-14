@@ -72,6 +72,7 @@ class Visualizer extends React.Component {
         this.setState({ running: true });
 
         if(algorithm === 1) await this.bubbleSort();
+        if(algorithm === 2) await this.selectionSort();
         if(algorithm === 3) await this.insertionSort();
     };
 
@@ -89,20 +90,47 @@ class Visualizer extends React.Component {
             await this.modify(array, [this.state.size-i-1], 2);
         }
         await this.modify(array, [0], 2);
+        this.unlock();
+    };
+
+    selectionSort = async() => {
+        let array = [...this.state.list], length = this.state.size;
+        for(let i = 0 ; i < length ; ++i) {
+            let minIndex = i;
+            for(let j = i ; j < length ; ++j) {
+                await this.modify(array, [minIndex, j], 1);
+                if(compare(array[j].key, array[minIndex].key, '<')) {
+                    await this.modify(array, [minIndex], 0);
+                    minIndex = j;
+                }
+                await this.modify(array, [j], 0);
+            }
+            await swap(array, minIndex, i);
+            await this.modify(array, [minIndex], 0);
+        }
+        this.done(array);
+        this.unlock();
     };
 
     insertionSort = async() => {
         let array = [...this.state.list], length = this.state.size;
         for(let i = 0 ; i < length-1 ; ++i) {
-            let j = i;
-            while(j >= 0 && compare(array[j].key, array[j+1].key, '>')) {
+            for(let j = i ; j >= 0 && compare(array[j].key, array[j+1].key, '>') ; --j) {
                 await this.modify(array, [j, j+1], 1);
                 await swap(array, j, j+1);
                 await this.modify(array, [j, j+1], 0);
-                --j;
             }
         }
-        for(let i = 0 ; i < length ; ++i) {
+        this.done(array);
+        this.unlock();
+    };
+
+    unlock = () => {
+        this.setState({ running: false });
+    };
+
+    done = async(array) => {
+        for(let i = 0 ; i < array.length ; ++i) {
             await this.modify(array, [i], 2);
         }
     };
