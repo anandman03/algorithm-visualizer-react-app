@@ -97,16 +97,18 @@ class Visualizer extends React.Component {
         let array = [...this.state.list], length = this.state.size;
         for(let i = 0 ; i < length ; ++i) {
             let minIndex = i;
-            for(let j = i ; j < length ; ++j) {
+            for(let j = i+1 ; j < length ; ++j) {
                 await this.modify(array, [minIndex, j], 1);
                 if(compare(array[j].key, array[minIndex].key, '<')) {
                     await this.modify(array, [minIndex], 0);
                     minIndex = j;
+                    await this.modify(array, [minIndex], 1);
                 }
                 await this.modify(array, [j], 0);
             }
+            await this.modify(array, [i], 1);
             await swap(array, minIndex, i);
-            await this.modify(array, [minIndex], 0);
+            await this.modify(array, [i, minIndex], 0);
         }
         this.done(array);
         this.unlock();
