@@ -68,12 +68,16 @@ class Visualizer extends React.Component {
 	};
 
     start = async() => {
+        this.lock(true);
         let algorithm = this.state.algorithm;
-        this.setState({ running: true });
-
         if(algorithm === 1) await this.bubbleSort();
         if(algorithm === 2) await this.selectionSort();
         if(algorithm === 3) await this.insertionSort();
+        if(algorithm === 4) await this.mergeSort();
+        if(algorithm === 5) await this.quickSort();
+        if(algorithm === 6) await this.heapSort();
+        this.done(this.state.list);
+        this.lock(false);
     };
 
     bubbleSort = async() => {
@@ -90,7 +94,6 @@ class Visualizer extends React.Component {
             await this.modify(array, [this.state.size-i-1], 2);
         }
         await this.modify(array, [0], 2);
-        this.unlock();
     };
 
     selectionSort = async() => {
@@ -110,8 +113,6 @@ class Visualizer extends React.Component {
             await swap(array, minIndex, i);
             await this.modify(array, [i, minIndex], 0);
         }
-        this.done(array);
-        this.unlock();
     };
 
     insertionSort = async() => {
@@ -123,12 +124,22 @@ class Visualizer extends React.Component {
                 await this.modify(array, [j, j+1], 0);
             }
         }
-        this.done(array);
-        this.unlock();
     };
 
-    unlock = () => {
-        this.setState({ running: false });
+    mergeSort = async() => {
+
+    };
+
+    quickSort = async() => {
+
+    };
+
+    headpSort = async() => {
+
+    };
+
+    lock = (status) => {
+        this.setState({ running: Boolean(status) });
     };
 
     done = async(array) => {
