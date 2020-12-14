@@ -27,22 +27,18 @@ class Navbar extends React.Component {
         return (
             <div className="navbar" id="navbar">
                 <button id="random" onClick = {() => this.props.newList(1)}>Random</button>
-                
                 <Algorithms 
                     onChange = {this.props.onChange}
                     algorithms = {this.state.Algorithms}
                 />
-
                 <Size 
                     onChange = {this.props.onChange}
                     lengths = {this.state.lengths}
                 />
-
                 <Speed 
                     onChange = {this.props.onChange}
                     speeds = {this.state.speeds}
                 />
-
                 <button id="start" onClick = {() => this.props.start()}>Start</button>
                 <a 
                     className="icon" 
