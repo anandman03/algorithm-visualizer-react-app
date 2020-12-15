@@ -8,38 +8,43 @@ html, body {
   top: 0;
   margin: 0;
   width: auto;
-  outline: none;
   display: flex;
-  flex-direction: column;
+  min-height: 95vh;
   font-family: 'Fira Code', monospace;
-  background-color: #fff !important;
+  flex-direction: column;
 }
 footer {
+  bottom: 20px !important;
+  margin-top: auto;
   text-align: center;
   position: relative;
 }
+.link {
+  text-decoration: none;
+  font-weight: bold;
+  color: #FF5252;
+}
 
-/* FRAME STARTS*/
+/* FRAME STARTS */
 .array {
   padding: 1rem;
   display: flex;
   min-height: 80vh;
-  flex-direction: row;
   align-items: flex-start;
 }
 .cell {
   flex: 0.5;
   margin: 1px;
   display: flex;
-  width: 0.000001%;
+  resize: horizontal;
   position: relative;
   align-items: flex-start;
   background-color: #D6D6D6;
   transition: all .4s ease-in;
 }
 .cell.done {
-  border-color: #9CEC5B;
   background-color: #9CEC5B;
+  border-color: #9CEC5B;
   transition: all .4s ease-out;
 }
 .cell.current {
@@ -49,55 +54,55 @@ footer {
 }
 /* FRAME ENDS */
 
-/* NAVBAR */
+/* NAVBAR STARTS */
 .navbar {
+  font-size: 16px;
+  min-height: 60px;
+  text-align: center;
   background-color: #000;
 }
 .navbar .options {
   margin: 10px;
+  text-align: center;
 }
 .navbar a {
+  outline: none;
+  cursor: pointer;
   color: #ccd6f6;
   padding: 13px 13px;
   text-decoration: none;
+}
+.navbar > a:hover {
+  color: #64ffda;
 }
 .navbar #menu {
   margin-top: 15px;
   width: 150px;
   height: 25px;
-}
-.navbar > a:hover {
-  color: #64ffda;
+  outline: none;
 }
 .navbar > .icon {
   display: none;
 }
-.navbar input {
-  height: 20px !important;
-}
 #start {
-  margin-bottom: 10px;
+  margin: 10px;
 }
 button {
-  color: #D6D6D6;
-  font-weight: 400;
-  outline: none;
+  width: 100px;
+  padding: 5px;
+  color: #fff;
   cursor: pointer;
-  background-color: #222;
   text-transform: uppercase;
-  transition: all 0.4s ease 0s;
-  border: 2px solid #D6D6D6 !important;
+  background-color: #222;
+  transition: 0.2s ease-in;
+  border: 2px solid #ccd6f6;
 }
-
 button:hover {
-  color: #222 !important;
-  background: #D6D6D6;
-  border-color: #D6D6D6 !important;
-  transition: all 0.4s ease 0s;
-  }
-
+  color: #222;
+  background-color: #ccd6f6;
+}
 @media screen and (max-width: 900px) {
-  .navbar .options, button {
+  .navbar button, .navbar .options {
       display: none;
   }
   .navbar a.icon {
@@ -112,7 +117,7 @@ button:hover {
       right: 0;
       top: 0;
   }
-  .navbar.responsive > .options {
+  .navbar.responsive .options {
       float: none;
       display: block;
       text-align: center;
@@ -121,3 +126,4 @@ button:hover {
     display: inline;
   }
 }
+/* NAVBAR ENDS */
