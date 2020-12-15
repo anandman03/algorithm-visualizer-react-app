@@ -165,7 +165,33 @@ class Visualizer extends React.Component {
     };
 
     quickSort = async() => {
-
+        await this.quickDivider(0, this.state.size-1);
+    };
+    quickDivider = async(start, end) => {
+        if(start < end) {
+            let pivot = await this.partition(start, end);
+            await this.quickDivider(start, pivot-1);
+            await this.quickDivider(pivot+1, end);
+        }
+    };
+    partition = async(start, end) => {
+        let array = [...this.state.list];
+        let prevIndex = start - 1, pivot = Number(array[end].key);
+        await this.modify(array, [end], 1);
+        for(let i = start ; i < end ; ++i) {
+            let currVal = Number(array[i].key);
+            await this.modify(array, [i], 1);
+            if(currVal < pivot) {
+                prevIndex += 1;
+                await this.modify(array, [prevIndex], 1);
+                await swap(array, i, prevIndex);
+                await this.modify(array, [prevIndex], 0);
+            }
+            await this.modify(array, [i], 0);
+        }
+        await swap(array, prevIndex+1, end);
+        await this.modify(array, [end], 0);
+        return prevIndex+1;
     };
 
     headpSort = async() => {
