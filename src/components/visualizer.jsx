@@ -127,7 +127,41 @@ class Visualizer extends React.Component {
     };
 
     mergeSort = async() => {
-
+        await this.mergeDivider(0, this.state.size-1);
+    };
+    mergeDivider = async(start, end) => {
+        if(start < end) {
+            let Mid = Math.floor((end+start)/2);
+            await this.mergeDivider(start, Mid);
+            await this.mergeDivider(Mid+1, end);
+            await this.merge(start, Mid, end);
+        }
+    };
+    merge = async(start, mid, end) => {
+        let list = [...this.state.list], array = [];
+        let i = start, j = mid+1;
+        while(i <= mid && j <= end) {
+            let Fval = Number(list[i].key);
+            let Sval = Number(list[j].key);
+            if(Fval >= Sval) array.push(list[j++].key);
+            else array.push(list[i++].key);
+        }
+        while(i <= mid) {
+            array.push(Number(list[i++].key));
+        }
+        while(j <= end) {
+            array.push(Number(list[j++].key));
+        }
+        for(let k = start ; k <= end ; ++k) {
+            await this.modify(list, [k], 1);
+        }
+        for(let x = 0, y = start ; y <= end && x < array.length ; ++x, ++y) {
+            list[y].key = Number(array[x]);
+            this.setState({ list: list });
+        }
+        for(let k = start ; k <= end ; ++k) {
+            await this.modify(list, [k], 0);
+        }
     };
 
     quickSort = async() => {
