@@ -8,44 +8,38 @@ html, body {
   top: 0;
   margin: 0;
   width: auto;
-  min-height: 95vh;
-  font-family: 'Fira Code', monospace;
+  outline: none;
   display: flex;
   flex-direction: column;
+  font-family: 'Fira Code', monospace;
   background-color: #fff !important;
 }
 footer {
-  bottom: 20px !important;
-  margin-top: auto;
   text-align: center;
   position: relative;
-}
-a, a:hover {
-  text-decoration: none;
 }
 
 /* FRAME STARTS*/
 .array {
-  display: flex;
-  align-items: flex-start;
-  min-height: 80vh;
-  height: 40vh;
   padding: 1rem;
+  display: flex;
+  min-height: 80vh;
   flex-direction: row;
+  align-items: flex-start;
 }
 .cell {
-  display: flex;
-  align-items: flex-start;
   flex: 0.5;
-  width: 0.000001%;
   margin: 1px;
-  background-color: #D6D6D6;
+  display: flex;
+  width: 0.000001%;
   position: relative;
+  align-items: flex-start;
+  background-color: #D6D6D6;
   transition: all .4s ease-in;
 }
 .cell.done {
-  background-color: #9CEC5B;
   border-color: #9CEC5B;
+  background-color: #9CEC5B;
   transition: all .4s ease-out;
 }
 .cell.current {
@@ -57,23 +51,12 @@ a, a:hover {
 
 /* NAVBAR */
 .navbar {
-  top: 0;
-  left: 0;
-  width: 100%;
-  font-size: 16px;
-  min-height: 60px;
-  overflow: hidden;
-  text-align: center;
   background-color: #000;
-  transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
 }
 .navbar .options {
-  text-align: center;
   margin: 10px;
 }
 .navbar a {
-  outline: none;
-  cursor: pointer;
   color: #ccd6f6;
   padding: 13px 13px;
   text-decoration: none;
@@ -82,7 +65,6 @@ a, a:hover {
   margin-top: 15px;
   width: 150px;
   height: 25px;
-  outline: none;
 }
 .navbar > a:hover {
   color: #64ffda;
