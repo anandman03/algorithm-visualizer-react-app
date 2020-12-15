@@ -194,8 +194,33 @@ class Visualizer extends React.Component {
         return prevIndex+1;
     };
 
-    headpSort = async() => {
-
+    heapSort = async() => {
+        let array = [...this.state.list];
+        for(let i = array.length-1 ; i >= 0 ; --i) {
+            await this.heapify(array, array.length, i);
+        }
+        for(let i = this.state.size-1 ; i > 0 ; --i) {
+            await this.modify(array, [i, 0], 1);
+            await swap(array, i, 0);
+            await this.modify(array, [i, 0], 0);
+            await this.heapify(array, i, 0);
+        }
+    };
+    heapify = async(array, currSize, index) => {
+        let currLargest = index;
+        let Lchild = 2*index+1, Rchild = 2*index+2;
+        if(Lchild < currSize && Number(array[currLargest].key) < Number(array[Lchild].key)) {
+            currLargest = Lchild;
+        }
+        if(Rchild < currSize && Number(array[currLargest].key) < Number(array[Rchild].key)) {
+            currLargest = Rchild;
+        }
+        if(currLargest !== index) {
+            await this.modify(array, [currLargest, index], 1);
+            await swap(array, currLargest, index);
+            await this.modify(array, [currLargest, index], 0);
+            await this.heapify(array, currSize, currLargest);
+        }
     };
 
     lock = (status) => {
