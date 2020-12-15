@@ -12,6 +12,7 @@ html, body {
   font-family: 'Fira Code', monospace;
   display: flex;
   flex-direction: column;
+  background-color: #fff !important;
 }
 footer {
   bottom: 20px !important;
@@ -19,8 +20,11 @@ footer {
   text-align: center;
   position: relative;
 }
+a, a:hover {
+  text-decoration: none;
+}
 
-/* ARRAY DISPLAY */
+/* FRAME STARTS*/
 .array {
   display: flex;
   align-items: flex-start;
@@ -36,73 +40,20 @@ footer {
   width: 0.000001%;
   margin: 1px;
   background-color: #D6D6D6;
-  resize: horizontal;
   position: relative;
   transition: all .4s ease-in;
 }
 .cell.done {
   background-color: #9CEC5B;
   border-color: #9CEC5B;
-  color: white;
   transition: all .4s ease-out;
-}
-.cell.visited {
-  border-color: #6184D8;
-  background-color: #6184D8;
-  color: white;
-  transition: .5s;
 }
 .cell.current {
-  border-color: #50C5B7;
-  background-color: #50C5B7;
-  color: white;
-  transition: all .4s ease-out;
-}
-.cell.min {
-  background-color: #FF1493;
-  border-color: #FF1493;
-  color: white;
-  transition: all .4s ease-out;
-}
-
-/* Search Algorithms */
-.s-array {
-  display: flex;
-  margin: 0 auto;
-  flex-wrap: wrap;
-  margin-top: 1.5%;
-  margin-bottom: 2%;
-  position: relative;
-  justify-content: center;
-}
-.s-cell {
-  margin: 5px;
-  padding: 10px;
-  background-color: #eee;
-  color: #222;
-  border: 5px solid #eee;
-  border-radius: 5px;
-  position: relative;
-  transition: all .4s ease-in;
-}
-.s-cell.done {
-  background-color: #9CEC5B;
-  border-color: #9CEC5B;
-  color: white;
-  transition: all .4s ease-out;
-}
-.s-cell.visited {
   border-color: #6184D8;
   background-color: #6184D8;
-  color: white;
-  transition: .5s;
-}
-.s-cell.current {
-  border-color: #50C5B7;
-  background-color: #50C5B7;
-  color: white;
   transition: all .4s ease-out;
 }
+/* FRAME ENDS */
 
 /* NAVBAR */
 .navbar {
