@@ -141,9 +141,7 @@ class Visualizer extends React.Component {
         let list = [...this.state.list], array = [];
         let i = start, j = mid+1;
         while(i <= mid && j <= end) {
-            let Fval = Number(list[i].key);
-            let Sval = Number(list[j].key);
-            if(Fval >= Sval) array.push(list[j++].key);
+            if(compare(list[i].key, list[j].key, '>')) array.push(list[j++].key);
             else array.push(list[i++].key);
         }
         while(i <= mid) {
@@ -176,12 +174,11 @@ class Visualizer extends React.Component {
     };
     partition = async(start, end) => {
         let array = [...this.state.list];
-        let prevIndex = start - 1, pivot = Number(array[end].key);
+        let prevIndex = start - 1;
         await this.modify(array, [end], 1);
         for(let i = start ; i < end ; ++i) {
-            let currVal = Number(array[i].key);
             await this.modify(array, [i], 1);
-            if(currVal < pivot) {
+            if(compare(array[i].key, array[end].key, '<')) {
                 prevIndex += 1;
                 await this.modify(array, [prevIndex], 1);
                 await swap(array, i, prevIndex);
@@ -209,10 +206,10 @@ class Visualizer extends React.Component {
     heapify = async(array, currSize, index) => {
         let currLargest = index;
         let Lchild = 2*index+1, Rchild = 2*index+2;
-        if(Lchild < currSize && Number(array[currLargest].key) < Number(array[Lchild].key)) {
+        if(Lchild < currSize && compare(array[currLargest].key, array[Lchild].key, '<')) {
             currLargest = Lchild;
         }
-        if(Rchild < currSize && Number(array[currLargest].key) < Number(array[Rchild].key)) {
+        if(Rchild < currSize && compare(array[currLargest].key, array[Rchild].key, '<')) {
             currLargest = Rchild;
         }
         if(currLargest !== index) {
