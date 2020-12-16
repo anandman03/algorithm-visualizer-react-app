@@ -57,7 +57,6 @@ class Visualizer extends React.Component {
             this.setState({ size: Number(value) });
             this.generateList();
         }
-        console.log(this.state);
     };
 
     generateList = (value = 0) => {
