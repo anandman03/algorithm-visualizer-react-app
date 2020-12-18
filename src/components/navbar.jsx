@@ -12,7 +12,8 @@ class Navbar extends React.Component {
 			{ value: 3, type: 'Insertion Sort' },
 			{ value: 4, type: 'Merge Sort' },
 			{ value: 5, type: 'Quick Sort' },
-			{ value: 6, type: 'Heap Sort' }
+            { value: 6, type: 'Heap Sort' },
+            { value: 7, type: 'Twist Sort' },
 		],
 		lengths: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
 		speeds: [0.50, 0.75, 1.00, 2.00, 4.00]

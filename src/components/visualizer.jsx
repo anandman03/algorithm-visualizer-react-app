@@ -75,6 +75,7 @@ class Visualizer extends React.Component {
         if(algorithm === 4) await this.mergeSort();
         if(algorithm === 5) await this.quickSort();
         if(algorithm === 6) await this.heapSort();
+        if(algorithm === 7) await this.twistSort();
         this.done(this.state.list);
         this.lock(false);
     };
@@ -216,6 +217,32 @@ class Visualizer extends React.Component {
             await swap(array, currLargest, index);
             await this.modify(array, [currLargest, index], 0);
             await this.heapify(array, currSize, currLargest);
+        }
+    };
+
+    twistSort = async() => {
+        await this.twistDivider(0, this.state.size-1);
+    };
+    twistDivider = async(start, end) => {
+        if(end - start > 10) {
+            let Mid = Math.floor((end+start)/2);
+            await this.twistDivider(start, Mid);
+            await this.twistDivider(Mid+1, end);
+            await this.merge(start, Mid, end);
+        }
+        else {
+            await this.twistInsertionSort(start, end);
+            return;
+        }
+    };
+    twistInsertionSort = async(start, end) => {
+        let array = [...this.state.list];
+        for(let i = start ; i < end ; ++i) {
+            for(let j = i ; j >= start && compare(array[j].key, array[j+1].key, '>') ; --j) {
+                await this.modify(array, [j, j+1], 1);
+                await swap(array, j, j+1);
+                await this.modify(array, [j, j+1], 0);
+            }
         }
     };
 
