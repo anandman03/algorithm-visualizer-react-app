@@ -36,7 +36,7 @@ class Visualizer extends React.Component {
                     start = {this.start}
                     response = {this.response}
                     newList = {this.generateList}
-                    onChange = {this.onChange.bind(this)}
+                    onChange = {this.onChange}
                 />
                 <Frame 
                     list = {this.state.list}
