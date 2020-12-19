@@ -24,3 +24,7 @@ I wanted to improve my skills with React.js, JavaScript, CSS and also learn sort
 6. `Quick sort` is a highly efficient sorting algorithm and is based on partitioning of array of data into smaller arrays. Quicksort partitions an array and then calls itself recursively twice to sort the two resulting subarrays. This algorithm is quite efficient for large-sized data sets as its average and worst-case complexity are O(nLogn) and Ο(n2), respectively.
 
 7. `Heap sort` is a comparison based sorting technique based on Binary Heap data structure. It is similar to selection sort where we first find the maximum element and place the maximum element at the end. We repeat the same process for the remaining elements. With worst-case time complexity being Ο(n log(n)), it is one of the most respected algorithms.
+
+## Design
+
+![home](public\home.PNG)
