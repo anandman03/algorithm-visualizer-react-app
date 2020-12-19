@@ -1,70 +1,26 @@
-# Getting Started with Create React App
+# Sorting Visualizer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![CodeFactor](https://www.codefactor.io/repository/github/anandman03/algorithm-visualizer-react-app/badge)](https://www.codefactor.io/repository/github/anandman03/algorithm-visualizer-react-app)
+[![DeepScan grade](https://deepscan.io/api/teams/10851/projects/15151/branches/299087/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=10851&pid=15151&bid=299087)
 
-## Available Scripts
+This is a progressive web app built using React.js to visualize sorting algorithms such as bubble, insertion, selection, merge, quick, heap and twist sort. This app is deployed with GitHub pages and can be accessed here: [Link](https://anandman03.github.io/algorithm-visualizer-react-app/). I hope you have fun playing around with it.
 
-In the project directory, you can run:
+## Purpose
 
-### `npm start`
+I wanted to improve my skills with React.js, JavaScript, CSS and also learn sorting algorithms.This project turned out to be a great way to achieve both of the aforementioned objectives at the same time.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Meet the Algorithms
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. `Twist sort` is a efficient sorting algorithm based on insertion and merge sort. This sorting algorithm uses merge sort to divide the array and when the size of array reaches a threshold, it uses insertion sort to sort the smaller arrays. Why insertion sort? It has O(n) time complexity for small arrays and uses minimum swaps. The time complexity of the algorithm is O(n log(n)).
 
-### `npm test`
+2. `Bubble sort` is a simple sorting algorithm. This sorting algorithm is comparison-based algorithm in which each pair of adjacent elements is compared and the elements are swapped if they are not in order. This algorithm is not suitable for large data sets as its average and worst case complexity are of Ο(n2) where n is the number of items.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. `Insertion Sort` is an in-place comparison-based sorting algorithm. The array is searched sequentially and unsorted items are moved and inserted into the sorted sub-list (in the same array). This algorithm is not suitable for large data sets as its average and worst case complexity are of Ο(n2), where n is the number of items.
 
-### `npm run build`
+4. `Selection sort` is a simple sorting algorithm. This sorting algorithm is an in-place comparison-based algorithm in which the list is divided into two parts, the sorted part at the left end and the unsorted part at the right end. This algorithm is not suitable for large data sets as its average and worst case complexities are of Ο(n2), where n is the number of items.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. `Merge sort` is a sorting technique based on divide and conquer technique. With worst-case time complexity being Ο(n log(n)), it is one of the most respected algorithms.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+6. `Quick sort` is a highly efficient sorting algorithm and is based on partitioning of array of data into smaller arrays. Quicksort partitions an array and then calls itself recursively twice to sort the two resulting subarrays. This algorithm is quite efficient for large-sized data sets as its average and worst-case complexity are O(nLogn) and Ο(n2), respectively.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+7. `Heap sort` is a comparison based sorting technique based on Binary Heap data structure. It is similar to selection sort where we first find the maximum element and place the maximum element at the end. We repeat the same process for the remaining elements. With worst-case time complexity being Ο(n log(n)), it is one of the most respected algorithms.
