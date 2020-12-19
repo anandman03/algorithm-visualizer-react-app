@@ -7,7 +7,7 @@ This is a progressive web app built using React.js to visualize sorting algorith
 
 ## Purpose
 
-I wanted to improve my skills with React.js, JavaScript, CSS and also learn sorting algorithms.This project turned out to be a great way to achieve both of the aforementioned objectives at the same time.
+I wanted to improve my skills with React.js, JavaScript, CSS and also learn sorting algorithms.This project turned out to be a great way to achieve both of the aforementioned objectives at the same time. I also implemented a sorting algorithm of my own named `Twist Sort`.
 
 ## Meet the Algorithms
 
