@@ -26,6 +26,10 @@ http://localhost:3000/
 
 I wanted to improve my skills with React.js, JavaScript, CSS and also learn sorting algorithms.This project turned out to be a great way to achieve both of the aforementioned objectives at the same time. I also implemented a sorting algorithm of my own named `Twist Sort`.
 
+## Component Structure
+
+![component](https://github.com/anandman03/algorithm-visualizer-react-app/blob/main/public/component.PNG)
+
 ## Meet the Algorithms
 
 1. `Twist sort` is a efficient sorting algorithm based on insertion and merge sort. This sorting algorithm uses merge sort to divide the array and when the size of array reaches a threshold, it uses insertion sort to sort the smaller arrays. Why insertion sort? It has O(n) time complexity for small arrays and uses minimum swaps. The time complexity of the algorithm is O(n log(n)).
