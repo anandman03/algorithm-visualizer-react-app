@@ -28,3 +28,7 @@ I wanted to improve my skills with React.js, JavaScript, CSS and also learn sort
 ## Design
 
 ![home](https://github.com/anandman03/algorithm-visualizer-react-app/blob/main/public/home.PNG)
+
+## Lisence
+
+[MIT](LICENSE)
