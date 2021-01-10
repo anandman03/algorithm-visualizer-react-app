@@ -32,3 +32,7 @@ I wanted to improve my skills with React.js, JavaScript, CSS and also learn sort
 ## Lisence
 
 [MIT](LICENSE)
+
+## Contributor
+
+[Mansimar_Anand](https://anandman03.github.io/Mansimar-Anand/)
