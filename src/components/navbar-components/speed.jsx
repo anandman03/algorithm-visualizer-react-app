@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Speed list component
 const Speed = (props) => {
     return (
         <span className="options">

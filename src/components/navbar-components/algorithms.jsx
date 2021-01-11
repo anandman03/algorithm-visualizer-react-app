@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Algorithm list component
 const Algorithms = (props) => {
     return (
         <span className="options">

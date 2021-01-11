@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Size list component
 const Size = (props) => {
     return (
         <span className="options">

@@ -20,10 +20,13 @@ class Visualizer extends React.Component {
         running: false,
     };
 
+    // for initial generation of list
     componentDidMount() {
         this.generateList();
     }
 
+    /* for hooking to the time instant of any change in 
+       state/event */
     componentDidUpdate() {
         this.onChange();
         this.generateList();
@@ -46,6 +49,7 @@ class Visualizer extends React.Component {
         );
     }
 
+    // for updating the state on changing navbar options
     onChange = (value, option) => {
         if(option === "algo" && !this.state.running) {
             this.setState({ algorithm: Number(value) });
@@ -59,6 +63,7 @@ class Visualizer extends React.Component {
         }
     };
 
+    // generate a random list
     generateList = (value = 0) => {
         if((this.state.list.length !== this.state.size && !this.state.running) || Number(value) === 1) {
             let list = generator(this.state.size);
@@ -66,6 +71,7 @@ class Visualizer extends React.Component {
         }
 	};
 
+    // select and run the corresponding algorithm  
     start = async() => {
         this.lock(true);
         let algorithm = this.state.algorithm;
@@ -80,6 +86,7 @@ class Visualizer extends React.Component {
         this.lock(false);
     };
 
+    // Bubble sort
     bubbleSort = async() => {
         let array = [...this.state.list], length = this.state.size;
         for(let i = 0 ; i < length-1 ; ++i) {
@@ -96,6 +103,7 @@ class Visualizer extends React.Component {
         await this.modify(array, [0], 2);
     };
 
+    // Selection sort
     selectionSort = async() => {
         let array = [...this.state.list], length = this.state.size;
         for(let i = 0 ; i < length ; ++i) {
@@ -115,6 +123,7 @@ class Visualizer extends React.Component {
         }
     };
 
+    // Insertion sort
     insertionSort = async() => {
         let array = [...this.state.list], length = this.state.size;
         for(let i = 0 ; i < length-1 ; ++i) {
@@ -126,6 +135,7 @@ class Visualizer extends React.Component {
         }
     };
 
+    // Merge sort
     mergeSort = async() => {
         await this.mergeDivider(0, this.state.size-1);
     };
@@ -162,6 +172,7 @@ class Visualizer extends React.Component {
         }
     };
 
+    // Quick sort
     quickSort = async() => {
         await this.quickDivider(0, this.state.size-1);
     };
@@ -190,7 +201,8 @@ class Visualizer extends React.Component {
         await this.modify(array, [end], 0);
         return prevIndex+1;
     };
-
+    
+    // Heap sort
     heapSort = async() => {
         let array = [...this.state.list];
         for(let i = array.length-1 ; i >= 0 ; --i) {
@@ -220,6 +232,7 @@ class Visualizer extends React.Component {
         }
     };
 
+    // Twist sort
     twistSort = async() => {
         await this.twistDivider(0, this.state.size-1);
     };
@@ -246,16 +259,19 @@ class Visualizer extends React.Component {
         }
     };
 
+    // To block changing of navbar options when the algorithm is running
     lock = (status) => {
         this.setState({ running: Boolean(status) });
     };
 
+    // Mark list as done
     done = async(array) => {
         for(let i = 0 ; i < array.length ; ++i) {
             await this.modify(array, [i], 2);
         }
     };
 
+    // Update the value in list
     modify = async (array, index, value) => {
         for(let i = 0 ; i < index.length ; ++i) {
             array[index[i]].value = value;
@@ -263,11 +279,13 @@ class Visualizer extends React.Component {
         await this.transition(array);
     };
 
+    // Updating the new list every time on list modification
     transition = async(newList) => {
         this.setState({list: newList});
         await pause(this.state.speed);
     };
     
+    // For responsive navbar
     response = () => {
         let Navbar = document.querySelector(".navbar");
         if(Navbar.className === "navbar") Navbar.className += " responsive";

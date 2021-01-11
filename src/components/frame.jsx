@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Frame Component for rendering list
 class Frame extends React.Component {
     render() { 
         return (

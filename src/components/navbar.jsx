@@ -4,6 +4,7 @@ import Algorithms from './navbar-components/algorithms';
 import Size from './navbar-components/size';
 import Speed from './navbar-components/speed';
 
+// Navbar Component
 class Navbar extends React.Component {
     state = {
         Algorithms: [
@@ -19,6 +20,8 @@ class Navbar extends React.Component {
 		speeds: [0.50, 0.75, 1.00, 2.00, 4.00]
     };
 
+    // prevent the default link behaviour for navbar
+    // hide/display button
     handleClick = (e) => {
         e.preventDefault();
         this.props.response();
