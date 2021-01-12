@@ -1,5 +1,14 @@
 import React from 'react';
 
+// algorithms
+import { bubbleSort } from './algorithms/bubbleSort.js';
+import { insertionSort } from './algorithms/insertionSort.js';
+import { selectionSort } from './algorithms/selectionSort.js';
+import { mergeSort } from './algorithms/mergeSort.js';
+import { quickSort } from './algorithms/quickSort.js';
+import { heapSort } from './algorithms/heapSort.js';
+import { twistSort } from './algorithms/twistSort.js';
+
 // components
 import Navbar from './navbar';
 import Frame from './frame';
@@ -8,8 +17,8 @@ import Footer from './footer';
 // helpers
 import pause from './helper/pause';
 import generator from './helper/generator';
-import swap from './helper/swap';
-import compare from './helper/compare';
+import {ALGORITHM, SPEED, SIZE, SWAP, CURRENT, NORMAL, DONE} from './helper/constants';
+import { getKeysCopy } from './helper/keys.js';
 
 class Visualizer extends React.Component {
     state = {
@@ -25,8 +34,7 @@ class Visualizer extends React.Component {
         this.generateList();
     }
 
-    /* for hooking to the time instant of any change in 
-       state/event */
+    /* for hooking to the time instant of any change in state/event */
     componentDidUpdate() {
         this.onChange();
         this.generateList();
@@ -51,13 +59,13 @@ class Visualizer extends React.Component {
 
     // for updating the state on changing navbar options
     onChange = (value, option) => {
-        if(option === "algo" && !this.state.running) {
+        if(option === ALGORITHM && !this.state.running) {
             this.setState({ algorithm: Number(value) });
         }
-        else if(option === "speed") {
+        else if(option === SPEED) {
             this.setState({ speed: Number(value) });
         }
-        else if(option === "size" && !this.state.running) {
+        else if(option === SIZE && !this.state.running) {
             this.setState({ size: Number(value) });
             this.generateList();
         }
@@ -74,189 +82,114 @@ class Visualizer extends React.Component {
     // select and run the corresponding algorithm  
     start = async() => {
         this.lock(true);
-        let algorithm = this.state.algorithm;
-        if(algorithm === 1) await this.bubbleSort();
-        if(algorithm === 2) await this.selectionSort();
-        if(algorithm === 3) await this.insertionSort();
-        if(algorithm === 4) await this.mergeSort();
-        if(algorithm === 5) await this.quickSort();
-        if(algorithm === 6) await this.heapSort();
-        if(algorithm === 7) await this.twistSort();
-        this.done(this.state.list);
+        let moves = await this.getMoves(this.state.algorithm);
+        await this.visualizeMoves(moves);
+        await this.done();
         this.lock(false);
     };
 
-    // Bubble sort
-    bubbleSort = async() => {
-        let array = [...this.state.list], length = this.state.size;
-        for(let i = 0 ; i < length-1 ; ++i) {
-            for(let j = 0 ; j < length-i-1 ; ++j) {
-                await this.modify(array, [j, j+1], 1);
-                if(compare(array[j].key, array[j+1].key, '>')) {
-                    await swap(array, j, j+1);
-                    await this.transition(array);
-                }
-                await this.modify(array, [j, j+1], 0);
-            }
-            await this.modify(array, [this.state.size-i-1], 2);
+    // get moves for corresponding algorithms
+    getMoves = async(Name) => {
+        let moves = [];
+        let array = await getKeysCopy(this.state.list, this.state.size);
+        if(Name === 1) {
+            moves = await bubbleSort(array, array.length);
         }
-        await this.modify(array, [0], 2);
+        if(Name === 2) {
+            moves = await selectionSort(array, array.length);
+        }
+        if(Name === 3) {
+            moves = await insertionSort(array, array.length);
+        }
+        if(Name === 4) {
+            moves = await mergeSort(array, array.length);
+        }
+        if(Name === 5) {
+            moves = await quickSort(array, array.length);
+        }
+        if(Name === 6) {
+            moves = await heapSort(array, array.length);
+        }
+        if(Name === 7) {
+            moves = await twistSort(array, array.length);
+        }
+        return moves;
     };
 
-    // Selection sort
-    selectionSort = async() => {
-        let array = [...this.state.list], length = this.state.size;
-        for(let i = 0 ; i < length ; ++i) {
-            let minIndex = i;
-            for(let j = i+1 ; j < length ; ++j) {
-                await this.modify(array, [minIndex, j], 1);
-                if(compare(array[j].key, array[minIndex].key, '<')) {
-                    await this.modify(array, [minIndex], 0);
-                    minIndex = j;
-                    await this.modify(array, [minIndex], 1);
-                }
-                await this.modify(array, [j], 0);
-            }
-            await this.modify(array, [i], 1);
-            await swap(array, minIndex, i);
-            await this.modify(array, [i, minIndex], 0);
-        }
-    };
-
-    // Insertion sort
-    insertionSort = async() => {
-        let array = [...this.state.list], length = this.state.size;
-        for(let i = 0 ; i < length-1 ; ++i) {
-            for(let j = i ; j >= 0 && compare(array[j].key, array[j+1].key, '>') ; --j) {
-                await this.modify(array, [j, j+1], 1);
-                await swap(array, j, j+1);
-                await this.modify(array, [j, j+1], 0);
-            }
-        }
-    };
-
-    // Merge sort
-    mergeSort = async() => {
-        await this.mergeDivider(0, this.state.size-1);
-    };
-    mergeDivider = async(start, end) => {
-        if(start < end) {
-            let Mid = Math.floor((end+start)/2);
-            await this.mergeDivider(start, Mid);
-            await this.mergeDivider(Mid+1, end);
-            await this.merge(start, Mid, end);
-        }
-    };
-    merge = async(start, mid, end) => {
-        let list = [...this.state.list], array = [];
-        let i = start, j = mid+1;
-        while(i <= mid && j <= end) {
-            if(compare(list[i].key, list[j].key, '>')) array.push(list[j++].key);
-            else array.push(list[i++].key);
-        }
-        while(i <= mid) {
-            array.push(Number(list[i++].key));
-        }
-        while(j <= end) {
-            array.push(Number(list[j++].key));
-        }
-        for(let k = start ; k <= end ; ++k) {
-            await this.modify(list, [k], 1);
-        }
-        for(let x = 0, y = start ; y <= end && x < array.length ; ++x, ++y) {
-            list[y].key = Number(array[x]);
-            this.setState({ list: list });
-        }
-        for(let k = start ; k <= end ; ++k) {
-            await this.modify(list, [k], 0);
-        }
-    };
-
-    // Quick sort
-    quickSort = async() => {
-        await this.quickDivider(0, this.state.size-1);
-    };
-    quickDivider = async(start, end) => {
-        if(start < end) {
-            let pivot = await this.partition(start, end);
-            await this.quickDivider(start, pivot-1);
-            await this.quickDivider(pivot+1, end);
-        }
-    };
-    partition = async(start, end) => {
-        let array = [...this.state.list];
-        let prevIndex = start - 1;
-        await this.modify(array, [end], 1);
-        for(let i = start ; i < end ; ++i) {
-            await this.modify(array, [i], 1);
-            if(compare(array[i].key, array[end].key, '<')) {
-                prevIndex += 1;
-                await this.modify(array, [prevIndex], 1);
-                await swap(array, i, prevIndex);
-                await this.modify(array, [prevIndex], 0);
-            }
-            await this.modify(array, [i], 0);
-        }
-        await swap(array, prevIndex+1, end);
-        await this.modify(array, [end], 0);
-        return prevIndex+1;
-    };
-    
-    // Heap sort
-    heapSort = async() => {
-        let array = [...this.state.list];
-        for(let i = array.length-1 ; i >= 0 ; --i) {
-            await this.heapify(array, array.length, i);
-        }
-        for(let i = this.state.size-1 ; i > 0 ; --i) {
-            await this.modify(array, [i, 0], 1);
-            await swap(array, i, 0);
-            await this.modify(array, [i, 0], 0);
-            await this.heapify(array, i, 0);
-        }
-    };
-    heapify = async(array, currSize, index) => {
-        let currLargest = index;
-        let Lchild = 2*index+1, Rchild = 2*index+2;
-        if(Lchild < currSize && compare(array[currLargest].key, array[Lchild].key, '<')) {
-            currLargest = Lchild;
-        }
-        if(Rchild < currSize && compare(array[currLargest].key, array[Rchild].key, '<')) {
-            currLargest = Rchild;
-        }
-        if(currLargest !== index) {
-            await this.modify(array, [currLargest, index], 1);
-            await swap(array, currLargest, index);
-            await this.modify(array, [currLargest, index], 0);
-            await this.heapify(array, currSize, currLargest);
-        }
-    };
-
-    // Twist sort
-    twistSort = async() => {
-        await this.twistDivider(0, this.state.size-1);
-    };
-    twistDivider = async(start, end) => {
-        if(end - start > 10) {
-            let Mid = Math.floor((end+start)/2);
-            await this.twistDivider(start, Mid);
-            await this.twistDivider(Mid+1, end);
-            await this.merge(start, Mid, end);
-        }
-        else {
-            await this.twistInsertionSort(start, end);
+    // for visualizing obtained moves.
+    visualizeMoves = async(moves, ranges) => {
+        if(moves.length === 0) {
             return;
         }
-    };
-    twistInsertionSort = async(start, end) => {
-        let array = [...this.state.list];
-        for(let i = start ; i < end ; ++i) {
-            for(let j = i ; j >= start && compare(array[j].key, array[j+1].key, '>') ; --j) {
-                await this.modify(array, [j, j+1], 1);
-                await swap(array, j, j+1);
-                await this.modify(array, [j, j+1], 0);
-            }
+        // if move length if 4, then we have to handle range part
+        if(moves[0].length === 4) {
+            await this.visualizeMovesInRange(moves, ranges);
         }
+        else {
+            await this.visualizeMovesBySwapping(moves, ranges);
+        }
+    };
+
+    // for visualizing merge and twist sort
+    visualizeMovesInRange = async(Moves, Ranges) => {
+        while (Moves.length > 0 && Moves[0].length === 4) {
+            await this.updateElementClass(Moves[0][3], CURRENT);
+            await this.updateElementValue([Moves[0][0], Moves[0][1]]);
+            await this.updateElementClass(Moves[0][3], NORMAL);
+            Moves.shift();
+        }
+        await this.visualizeMoves(Moves, Ranges);
+    };
+
+    // for visualizing rest of the algorithms
+    visualizeMovesBySwapping = async(Moves, Ranges) => {
+        while(Moves.length > 0) {
+            let currMove = Moves[0];
+            if(currMove.length !== 3) {
+                await this.visualizeMoves(Moves, Ranges);
+                return;
+            }
+            else {
+                let indexes = [currMove[0], currMove[1]];
+                await this.updateElementClass(indexes, CURRENT);
+                if(currMove[2] === SWAP) {
+                    await this.updateList(indexes);
+                }
+                await this.updateElementClass(indexes, NORMAL);
+            }
+            Moves.shift();
+        }
+    };
+
+    // swapping the values for current move
+    updateList = async(indexes) => {
+        let array = [...this.state.list];
+        let stored = array[indexes[0]].key;
+        array[indexes[0]].key = array[indexes[1]].key;
+        array[indexes[1]].key = stored;
+        await this.updateStateChanges(array);
+    };
+
+    // update value of list element
+    updateElementValue = async(indexes) => {
+        let array = [...this.state.list];
+        array[indexes[0]].key = indexes[1];
+        await this.updateStateChanges(array);
+    };
+
+    // update classType of list element
+    updateElementClass = async(indexes, classType) => {
+        let array = [...this.state.list];
+        for(let i = 0 ; i < indexes.length ; ++i) {
+            array[indexes[i]].classType = classType;
+        }
+        await this.updateStateChanges(array);
+    };
+
+    // Updating the state attribute list every time on modification
+    updateStateChanges = async(newList) => {
+        this.setState({list: newList});
+        await pause(this.state.speed);
     };
 
     // To block changing of navbar options when the algorithm is running
@@ -265,24 +198,12 @@ class Visualizer extends React.Component {
     };
 
     // Mark list as done
-    done = async(array) => {
-        for(let i = 0 ; i < array.length ; ++i) {
-            await this.modify(array, [i], 2);
+    done = async() => {
+        let indexes = [];
+        for(let i = 0 ; i < this.state.size ; ++i) {
+            indexes.push(i);
         }
-    };
-
-    // Update the value in list
-    modify = async (array, index, value) => {
-        for(let i = 0 ; i < index.length ; ++i) {
-            array[index[i]].value = value;
-        }
-        await this.transition(array);
-    };
-
-    // Updating the new list every time on list modification
-    transition = async(newList) => {
-        this.setState({list: newList});
-        await pause(this.state.speed);
+        await this.updateElementClass(indexes, DONE);
     };
     
     // For responsive navbar
