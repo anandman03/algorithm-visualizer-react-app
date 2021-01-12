@@ -117,36 +117,41 @@ class Visualizer extends React.Component {
     };
 
     // for visualizing obtained moves.
-    visualizeMoves = async(moves, ranges) => {
+    visualizeMoves = async(moves) => {
         if(moves.length === 0) {
             return;
         }
         // if move length if 4, then we have to handle range part
         if(moves[0].length === 4) {
-            await this.visualizeMovesInRange(moves, ranges);
+            await this.visualizeMovesInRange(moves);
         }
         else {
-            await this.visualizeMovesBySwapping(moves, ranges);
+            await this.visualizeMovesBySwapping(moves);
         }
     };
 
     // for visualizing merge and twist sort
-    visualizeMovesInRange = async(Moves, Ranges) => {
+    visualizeMovesInRange = async(Moves) => {
+        let prevRange = [];
         while (Moves.length > 0 && Moves[0].length === 4) {
-            await this.updateElementClass(Moves[0][3], CURRENT);
+            // change range only when required to avoid blinking
+            if(prevRange !== Moves[0][3]) {
+                await this.updateElementClass(prevRange, NORMAL);
+                prevRange = Moves[0][3];
+                await this.updateElementClass(Moves[0][3], CURRENT);
+            }
             await this.updateElementValue([Moves[0][0], Moves[0][1]]);
-            await this.updateElementClass(Moves[0][3], NORMAL);
             Moves.shift();
         }
-        await this.visualizeMoves(Moves, Ranges);
+        await this.visualizeMoves(Moves);
     };
 
     // for visualizing rest of the algorithms
-    visualizeMovesBySwapping = async(Moves, Ranges) => {
+    visualizeMovesBySwapping = async(Moves) => {
         while(Moves.length > 0) {
             let currMove = Moves[0];
             if(currMove.length !== 3) {
-                await this.visualizeMoves(Moves, Ranges);
+                await this.visualizeMoves(Moves);
                 return;
             }
             else {
