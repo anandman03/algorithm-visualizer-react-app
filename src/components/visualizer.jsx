@@ -21,6 +21,10 @@ import {ALGORITHM, SPEED, SIZE, SWAP, CURRENT, NORMAL, DONE} from './helper/cons
 import { getKeysCopy } from './helper/keys.js';
 
 class Visualizer extends React.Component {
+    /*  each element in the list contains a <key, classType> where:
+        key - integer value of element,
+        classType - css class for changing color of element
+    */
     state = {
         list: [],
         size: 10,
@@ -58,6 +62,7 @@ class Visualizer extends React.Component {
     }
 
     // for updating the state on changing navbar options
+    // avoid changing algorithm and size when algorithm is running
     onChange = (value, option) => {
         if(option === ALGORITHM && !this.state.running) {
             this.setState({ algorithm: Number(value) });
@@ -116,7 +121,7 @@ class Visualizer extends React.Component {
         return moves;
     };
 
-    // for visualizing obtained moves.
+    // for visualizing obtained moves
     visualizeMoves = async(moves) => {
         if(moves.length === 0) {
             return;
@@ -130,7 +135,7 @@ class Visualizer extends React.Component {
         }
     };
 
-    // for visualizing merge and twist sort
+    // for visualizing range based sorting algorithms
     visualizeMovesInRange = async(Moves) => {
         let prevRange = [];
         while (Moves.length > 0 && Moves[0].length === 4) {
@@ -146,10 +151,11 @@ class Visualizer extends React.Component {
         await this.visualizeMoves(Moves);
     };
 
-    // for visualizing rest of the algorithms
+    // for visualizing swapping based sorting algorithms
     visualizeMovesBySwapping = async(Moves) => {
         while(Moves.length > 0) {
             let currMove = Moves[0];
+            // if container doesn't contains 3 elements then return
             if(currMove.length !== 3) {
                 await this.visualizeMoves(Moves);
                 return;

@@ -1,5 +1,7 @@
 import {CHANGE_VALUE} from '../helper/constants.js';
 
+// merge sort returns container with index, value, boolean
+// and list of range
 export const mergeSort = async(array, length) => {
     let moves = [];
     await divide(array, moves, 0, length-1);

@@ -2,6 +2,11 @@ import {SWAP} from '../helper/constants.js';
 import {swap} from '../helper/swap.js';
 import { merge } from './mergeSort.js';
 
+// twist sort return two types of containers
+// 1. It returns container with index, value, boolean
+// and list of range
+// 2. It returns container with 2 indexes and boolean
+// describing to swap or not
 export const twistSort = async(array, length) => {
     let moves = [];
     await divider(moves, array, 0, length-1);

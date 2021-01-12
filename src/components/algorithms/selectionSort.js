@@ -1,6 +1,8 @@
 import {SWAP} from '../helper/constants.js';
 import {swap} from '../helper/swap.js';
 
+// selection sort returns container with 2 indexes and boolean
+// describing to swap or not
 export const selectionSort = async(array, length) => {
     let moves = [];
     for(let i = 0 ; i < length-1 ; ++i) {

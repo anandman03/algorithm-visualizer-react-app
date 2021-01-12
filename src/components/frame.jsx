@@ -19,6 +19,7 @@ class Frame extends React.Component {
         );
     }
 
+    // using css classes to change color of elements
     getClass = (value) => {
         if(value === 0) return 'cell';
         else if(value === 1) return 'cell current';
