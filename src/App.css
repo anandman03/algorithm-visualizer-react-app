@@ -22,7 +22,7 @@ footer {
 .link {
   text-decoration: none;
   font-weight: bold;
-  color: #FF5252;
+  color: #db0707;
 }
 
 /* FRAME STARTS */
@@ -39,17 +39,17 @@ footer {
   resize: horizontal;
   position: relative;
   align-items: flex-start;
-  background-color: #D6D6D6;
+  background-color: #bd0000;
   transition: all .4s ease-in;
 }
 .cell.done {
-  background-color: #9CEC5B;
-  border-color: #9CEC5B;
+  background-color: #7cda2f;
+  border-color: #4a910f;
   transition: all .4s ease-out;
 }
 .cell.current {
-  border-color: #6184D8;
-  background-color: #6184D8;
+  border-color: #2fc7f5;
+  background-color: #e4ec49;
   transition: all .4s ease-out;
 }
 /* FRAME ENDS */
@@ -61,7 +61,7 @@ footer {
   font-size: 16px;
   min-height: 60px;
   text-align: center;
-  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.756);
 }
 .navbar .options {
   margin: 10px;
@@ -70,7 +70,7 @@ footer {
 .navbar a {
   outline: none;
   cursor: pointer;
-  color: #ccd6f6;
+  color: #1239b6;
   padding: 13px 13px;
   text-decoration: none;
 }
@@ -95,7 +95,7 @@ footer {
 button {
   width: 100px;
   padding: 5px;
-  color: #fff;
+  color: rgb(236, 210, 210);
   cursor: pointer;
   text-transform: uppercase;
   background-color: #222;
